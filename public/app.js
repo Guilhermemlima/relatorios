@@ -4,7 +4,7 @@ let modalCallback = null;
 let paginaAtual = 'dashboard';
 
 // ── INIT ──
-document.addEventListener('DOMContentLoaded', () => {h
+document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('data-hoje').textContent = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
   document.getElementById('form-login').addEventListener('submit', fazerLogin);
   document.querySelectorAll('.nav-item[data-pagina]').forEach(el => {
