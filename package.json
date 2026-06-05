@@ -1,7 +1,7 @@
 {
   "name": "sistema-relatorios",
   "version": "1.0.0",
-  "description": "Sistema de Relatórios Diários, Semanais e Mensais",
+  "description": "Sistema de Relatorios Diarios, Semanais e Mensais",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -12,7 +12,7 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "exceljs": "^4.4.0",
-    "pdfkit": "^0.15.0",
-    "sql.js": "^1.14.1"
+    "firebase-admin": "^12.0.0",
+    "pdfkit": "^0.15.0"
   }
 }
