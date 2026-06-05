@@ -4,7 +4,7 @@ let modalCallback = null;
 let paginaAtual = 'dashboard';
 
 // ── INIT ──
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {h
   document.getElementById('data-hoje').textContent = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
   document.getElementById('form-login').addEventListener('submit', fazerLogin);
   document.querySelectorAll('.nav-item[data-pagina]').forEach(el => {
@@ -400,7 +400,7 @@ function renderExportar() {
   `;
 }
 
-function exportar(formato) {
+async function exportar(formato) {
   const tipo = document.getElementById('exp-tipo')?.value || '';
   const inicio = document.getElementById('exp-inicio')?.value || '';
   const fim = document.getElementById('exp-fim')?.value || '';
@@ -409,8 +409,42 @@ function exportar(formato) {
   if (inicio) params.set('inicio', inicio);
   if (fim) params.set('fim', fim);
   const url = `/api/exportar/${formato}?${params}`;
-  window.open(url, '_blank');
+
   toast(`Exportando ${formato.toUpperCase()}...`, 'sucesso');
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      toast(errData.erro || `Erro ao exportar ${formato.toUpperCase()}.`, 'erro');
+      return;
+    }
+
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+
+    const disposition = response.headers.get('Content-Disposition');
+    let filename = formato === 'excel' ? 'relatorios.xlsx' : 'relatorios.pdf';
+    if (disposition) {
+      const match = disposition.match(/filename[^;=\n]*=(['""].*?['""]|[^;\n]*)/);
+      if (match && match[1]) filename = match[1].replace(/['"]/g, '');
+    }
+
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(blobUrl);
+    toast(`${formato.toUpperCase()} exportado com sucesso!`, 'sucesso');
+  } catch (err) {
+    toast(`Erro ao exportar: ${err.message}`, 'erro');
+  }
 }
 
 // ── USUÁRIOS ──
