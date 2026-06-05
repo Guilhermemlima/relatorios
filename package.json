@@ -1,0 +1,19 @@
+{
+  "name": "sistema-relatorios",
+  "version": "1.0.0",
+  "description": "Sistema de Relatórios Diários, Semanais e Mensais",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "exceljs": "^4.4.0",
+    "lowdb": "^1.0.0",
+    "pdfkit": "^0.15.0",
+    "uuid": "^9.0.0"
+  }
+}
