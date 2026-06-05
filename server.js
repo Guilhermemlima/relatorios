@@ -9,7 +9,7 @@ const ExcelJS = require('exceljs');
 const PDFDocument = require('pdfkit');
 
 // ── BANCO DE DADOS ──
-const adapter = new FileSync(path.join(__dirname, 'dados.json'));
+const adapter = new FileSync('/tmp/dados.json');
 const db = low(adapter);
 
 db.defaults({ usuarios: [], relatorios: [], _seq: { usuario: 1, relatorio: 1 } }).write();
